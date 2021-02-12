@@ -15,17 +15,9 @@ public class BaseTest {
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
 
-    @Autowired
-    Util util;
-
     @Test
     public void redisComponent() {
         System.out.println("xxx");
-        redisTemplate.opsForValue().set("kkkk", "vvvv");
-    }
-
-    @Test
-    public void utilTest(){
-        util.util();
+        redisTemplate.opsForValue().set("key", "vvvv");
     }
 }
