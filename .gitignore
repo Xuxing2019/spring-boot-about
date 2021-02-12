@@ -1,0 +1,3 @@
+# Project exclude paths
+/xx-common/xx-common-data/target/
+/xx-upms/xx-upms-biz/target/
