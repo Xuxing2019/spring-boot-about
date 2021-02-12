@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  top.xuxing.common.data.cache.RedisTemplateConfig
+  top.xuxing.common.data.cache.RedisTemplateConfig,\
+  top.xuxing.common.data.cache.TestUtil
