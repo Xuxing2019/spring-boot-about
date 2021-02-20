@@ -10,22 +10,6 @@ import java.util.concurrent.ExecutorService;
 public interface MsgConsumer {
 
     /**
-     * topic
-     */
-    String getConsumerTopic();
-    /**
-     * 设置消费设数线程数
-     * @return
-     */
-    int getConsumerThreadNum();
-
-    /**
-     * 设置消费设数线程池
-     * @return
-     */
-    ExecutorService getConsumerThreadPool();
-
-    /**
      * 消费成功
      * @param message
      */

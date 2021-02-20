@@ -17,16 +17,16 @@ import java.util.List;
 @AllArgsConstructor
 public class InitRedisQueueConfig {
 
-    private final List<MsgConsumer> msgConsumers;
+    private final List<RedisQueueConfiguration> redisQueueConfigurations;
 
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final RedisMqConsumerContainer redisMqConsumerContainer;
 
     private void init() {
-        log.info("init...");
-        msgConsumers.forEach(msgConsumer -> {
-            redisMqConsumerContainer.addConsumer(RedisQueueConfiguration.builder().queue(msgConsumer.getConsumerTopic()).consumer(msgConsumer).build(), msgConsumer.getConsumerThreadPool(), redisTemplate);
+        log.info("redis queue init...");
+        redisQueueConfigurations.forEach(redisQueueConfiguration -> {
+            redisMqConsumerContainer.addConsumer(redisQueueConfiguration, redisTemplate);
         });
     }
 }

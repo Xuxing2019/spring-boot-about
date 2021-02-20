@@ -18,14 +18,12 @@ public class RedisQueueListener implements Runnable {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private final String queue;
+    private final String topic;
 
     private final MsgConsumer msgConsumer;
 
     @Override
     public void run() {
-        String topic = msgConsumer.getConsumerTopic();
-        log.info("RedisQueueListener starting.... topic={}", topic);
         while (RedisMqConsumerContainer.CONSUMER_MAP.containsKey(topic)) {
             try {
                 Object msg = redisTemplate.opsForList().rightPop(topic, 30, TimeUnit.SECONDS);
@@ -39,9 +37,9 @@ public class RedisQueueListener implements Runnable {
             } catch (QueryTimeoutException ignored) {
             } catch (Exception e) {
                 if (RedisMqConsumerContainer.CONSUMER_MAP.containsKey(topic)) {
-                    log.error("异常 Queue:{}", queue, e);
+                    log.error("异常 topic:{}", topic, e);
                 } else {
-                    log.info("RedisQueueListener 退出...queue:{}", queue);
+                    log.info("RedisQueueListener 退出...topic:{}", topic);
                 }
             }
         }

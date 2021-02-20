@@ -5,20 +5,33 @@ import lombok.Getter;
 import lombok.Setter;
 import top.xuxing.common.data.redis.pc.msg.MsgConsumer;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * @author xhb
  * @date 2021/2/4
  */
-@Getter
-@Setter
-@Builder
-public class RedisQueueConfiguration {
+public interface RedisQueueConfiguration {
     /**
-     * 队列名称
+     * topic
+     * @return
      */
-    private String queue;
+    String getConsumerTopic();
+    /**
+     * 设置消费设数线程数
+     * @return
+     */
+    int getConsumerThreadNum();
+
+    /**
+     * 设置消费设数线程池
+     * @return
+     */
+    ExecutorService getConsumerThreadPool();
+
     /**
      * 消费者
+     * @return
      */
-    private MsgConsumer consumer;
+    MsgConsumer getConsumer();
 }

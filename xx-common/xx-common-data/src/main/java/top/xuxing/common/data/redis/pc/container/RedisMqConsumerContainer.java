@@ -22,23 +22,25 @@ public class RedisMqConsumerContainer {
 
     private final Map<String, ExecutorService> executorServices = new HashMap<>(16);
 
-    public void addConsumer(RedisQueueConfiguration redisQueueConfiguration, ExecutorService executorService, RedisTemplate<String, Object> redisTemplate) {
-        if (ObjectUtil.isNull(executorServices.containsKey(redisQueueConfiguration.getQueue()))) {
+    public void addConsumer(RedisQueueConfiguration redisQueueConfiguration, RedisTemplate<String, Object> redisTemplate) {
+        String topic = redisQueueConfiguration.getConsumerTopic();
+        if (ObjectUtil.isNull(executorServices.containsKey(topic))) {
             log.info("thread pool is null");
             throw new RuntimeException();
         }else{
-            executorServices.put(redisQueueConfiguration.getQueue(), executorService);
+            executorServices.put(topic, redisQueueConfiguration.getConsumerThreadPool());
         }
-        if (CONSUMER_MAP.containsKey(redisQueueConfiguration.getQueue())) {
-            log.warn("queue={} exist", redisQueueConfiguration.getQueue());
+        if (CONSUMER_MAP.containsKey(topic)) {
+            log.warn("queue={} exist", topic);
         }
         if (redisQueueConfiguration.getConsumer() == null) {
             log.warn("queue consumer map is mull");
         }
-        CONSUMER_MAP.put(redisQueueConfiguration.getQueue(), redisQueueConfiguration);
-        for (int i = 0; i < redisQueueConfiguration.getConsumer().getConsumerThreadNum(); i++) {
-            this.executorServices.get(redisQueueConfiguration.getQueue()).submit(new RedisQueueListener(redisTemplate, redisQueueConfiguration.getQueue(), redisQueueConfiguration.getConsumer()));
+        CONSUMER_MAP.put(redisQueueConfiguration.getConsumerTopic(), redisQueueConfiguration);
+        for (int i = 0; i < redisQueueConfiguration.getConsumerThreadNum(); i++) {
+            this.executorServices.get(redisQueueConfiguration.getConsumerTopic()).submit(new RedisQueueListener(redisTemplate, redisQueueConfiguration.getConsumerTopic(), redisQueueConfiguration.getConsumer()));
         }
+        log.info("redis queue topic={} listenerNum={} loading finished", redisQueueConfiguration.getConsumerTopic(), redisQueueConfiguration.getConsumerThreadNum());
     }
 
     public void destroy() {

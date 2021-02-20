@@ -18,18 +18,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Getter
 @Setter
-@Component
+@Component("dogConsumer")
 public class DogConsumer implements MsgConsumer {
-
-    private String consumerTopic = "dog";
-
-    private int consumerThreadNum = 1000;
-
-    private ExecutorService consumerThreadPool;
-
-    public DogConsumer(){
-        this.consumerThreadPool = new ThreadPoolExecutor(1000,1000,30L, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
-    }
 
     @Override
     public void onMessage(Object message) {

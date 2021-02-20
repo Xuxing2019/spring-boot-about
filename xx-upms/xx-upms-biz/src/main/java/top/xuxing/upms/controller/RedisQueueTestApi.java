@@ -1,12 +1,14 @@
 package top.xuxing.upms.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.xuxing.common.data.redis.pc.config.RedisQueueConfiguration;
 import top.xuxing.common.data.redis.pc.msg.MsgConsumer;
 
 /**
@@ -20,11 +22,12 @@ public class RedisQueueTestApi {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private final MsgConsumer msgConsumer;
+    @Qualifier("dogRedisQueueConfiguration")
+    private final RedisQueueConfiguration redisQueueConfiguration;
 
     @GetMapping("send/msg")
-    public ResponseEntity sendRedisQueueMsg(){
-        String consumerTopic = msgConsumer.getConsumerTopic();
+    public ResponseEntity<String> sendRedisQueueMsg(){
+        String consumerTopic = redisQueueConfiguration.getConsumerTopic();
         for (int i = 0; i < 1000; i++) {
             redisTemplate.opsForList().leftPush(consumerTopic, "red shit");
         }
