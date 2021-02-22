@@ -29,7 +29,7 @@ public class RedisQueueTestApi {
     public ResponseEntity<String> sendRedisQueueMsg(){
         String consumerTopic = redisQueueConfiguration.getConsumerTopic();
         for (int i = 0; i < 1000; i++) {
-            redisTemplate.opsForList().leftPush(consumerTopic, "red shit");
+            redisTemplate.opsForList().leftPush(consumerTopic, "red shit " + i);
         }
         return ResponseEntity.ok("success");
     }

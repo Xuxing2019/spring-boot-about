@@ -37,7 +37,7 @@ public class RedisQueueListener implements Runnable {
             } catch (QueryTimeoutException ignored) {
             } catch (Exception e) {
                 if (RedisMqConsumerContainer.CONSUMER_MAP.containsKey(topic)) {
-                    log.error("异常 topic:{}", topic, e);
+                    log.error("Exception topic:{}, msg={}", topic, e.getMessage());
                 } else {
                     log.info("RedisQueueListener 退出...topic:{}", topic);
                 }

@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  top.xuxing.common.data.cache.RedisTemplateConfig,\
+  top.xuxing.common.data.cache.RedisTemplateConfiguration,\
   top.xuxing.common.data.cache.TestUtil,\
   top.xuxing.common.data.redis.pc.config.RedisQueueConfig
