@@ -1,0 +1,19 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: xx-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_HOST:nacos}:${NACOS_PORT:8848}
+        namespace: ${NACOS_NAMESPACE:342d912e-b03e-40db-a723-a8b753ce2cc8}
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        file-extension: yml
+        shared-configs:
+            - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
