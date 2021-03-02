@@ -17,3 +17,6 @@ spring:
         file-extension: yml
         shared-configs:
             - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  redis:
+    host: localhost
+    port: 6379
